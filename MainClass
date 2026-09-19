@@ -1,0 +1,316 @@
+//
+// Source code recreated from a .class file by IntelliJ IDEA
+// (powered by Fernflower decompiler)
+//
+
+package p1;
+
+import java.util.Scanner;
+
+public class Main {
+    static Person[] persons;
+    static int personCount = 0;
+
+    public Main() {
+    }
+
+    static int display() {
+        Scanner sc = new Scanner(System.in);
+
+        boolean check;
+        int choice;
+        do {
+            System.out.println("\n========= HOSPITAL SYSTEM =========");
+            System.out.println("PRESS 1 - ADMIT PATIENT");
+            System.out.println("PRESS 2 - APPOINTMENT");
+            System.out.println("PRESS 3 - MEDICAL RECORD");
+            System.out.println("PRESS 4 - CALCULATE BILL");
+            System.out.println("PRESS 5 - ADD DOCTOR");
+            System.out.println("PRESS 6 - ADD PERSON");
+            System.out.println("PRESS 7 - STAFF MANAGEMENT");
+            System.out.println("PRESS 8 - DISPLAY ALL PERSONS");
+            System.out.println("===================================");
+            System.out.print("Enter your choice (1-8): ");
+            check = false;
+            choice = sc.nextInt();
+            if (choice >= 1 && choice <= 8) {
+                check = true;
+            } else {
+                System.out.println("Invalid choice! Enter Again.");
+            }
+        } while(!check);
+
+        return choice;
+    }
+
+    static void displayAllPersons() {
+        if (personCount == 0) {
+            System.out.println("No persons added yet!");
+        } else {
+            System.out.println("\n===== ALL PERSONS IN HOSPITAL =====");
+
+            for(int i = 0; i < personCount; ++i) {
+                System.out.println("\n--- Person " + (i + 1) + " ---");
+                persons[i].displayInfo();
+                if (persons[i] instanceof Doctor) {
+                    System.out.println("Type: Doctor");
+                } else if (persons[i] instanceof Patient) {
+                    System.out.println("Type: Patient");
+                } else if (persons[i] instanceof Staff) {
+                    System.out.println("Type: Staff");
+                }
+            }
+
+            System.out.println("===================================");
+        }
+
+    }
+
+    public static void main(String[] args) {
+        Scanner sc = new Scanner(System.in);
+        System.out.print("Enter max number of persons for hospital: ");
+        int size = sc.nextInt();
+        persons = new Person[size];
+        System.out.println("Hospital system started! Capacity: " + size);
+
+        char newChoice;
+        do {
+            int userChoice = display();
+            switch (userChoice) {
+                case 1:
+                    System.out.println("1 - Check Patient | 2 - Add Patient:");
+                    int choice = sc.nextInt();
+                    if (choice == 2) {
+                        if (personCount >= persons.length) {
+                            System.out.println("Hospital is full! Cannot add more persons.");
+                        } else {
+                            System.out.println("Enter ID, Name, Age, Gender, Phone, Address:");
+                            int id = sc.nextInt();
+                            sc.nextLine();
+                            String name = sc.nextLine();
+                            int age = sc.nextInt();
+                            sc.nextLine();
+                            String gender = sc.nextLine();
+                            long phone = sc.nextLong();
+                            sc.nextLine();
+                            String address = sc.nextLine();
+                            System.out.println("Enter Blood Group, Disease, Admission Date, Discharge Date, Medical History:");
+                            String bloodGroup = sc.nextLine();
+                            String disease = sc.nextLine();
+                            String admissionDate = sc.nextLine();
+                            String dischargeDate = sc.nextLine();
+                            String medicalHistory = sc.nextLine();
+                            Patient p = new Patient(id, name, age, gender, phone, address, bloodGroup, disease, admissionDate, dischargeDate, medicalHistory);
+                            p.admitPatient(id, bloodGroup, disease, admissionDate);
+                            persons[personCount++] = p;
+                            PatientDAO.savePatient(p);
+                            System.out.println("Patient added to system! Total persons: " + personCount);
+                        }
+                    } else {
+                        if (choice != 1) {
+                            break;
+                        }
+
+                        System.out.println("Enter patient Id, Blood group, Admission date, Disease:");
+                        int patientId = sc.nextInt();
+                        sc.nextLine();
+                        String bloodGroup = sc.nextLine();
+                        String admissionDate = sc.nextLine();
+                        String disease = sc.nextLine();
+                        boolean found = false;
+
+                        for(int i = 0; i < personCount; ++i) {
+                            if (persons[i] instanceof Patient && persons[i].getId() == patientId) {
+                                ((Patient)persons[i]).dischargePatient(patientId, bloodGroup, disease, admissionDate);
+                                found = true;
+                                break;
+                            }
+                        }
+
+                        if (!found) {
+                            System.out.println("Patient not found!");
+                        }
+                    }
+                    break;
+                case 2:
+                    Appointment object2 = new Appointment();
+                    System.out.println("1 - Schedule Appointment | 2 - Cancel Appointment:");
+                    int choice1 = sc.nextInt();
+                    if (choice1 == 1) {
+                        System.out.println("Enter Appointment Id, Doctor Name, Patient Name, Status, Time, Date:");
+                        int appointmentId = sc.nextInt();
+                        String doctorName = sc.next();
+                        String patientName = sc.next();
+                        String status = sc.next();
+                        String appointmentTime = sc.next();
+                        sc.nextLine();
+                        String appointmentDate = sc.nextLine();
+                        object2.scheduleAppointment(appointmentId, patientName, doctorName, appointmentDate, appointmentTime, status);
+                    } else {
+                        System.out.println("Enter Record Id, Admission Date, Doctor Name:");
+                        int recordId = sc.nextInt();
+                        sc.nextLine();
+                        String admissionDate = sc.nextLine();
+                        String doctorName = sc.next();
+                        object2.cancelAppointment(recordId, doctorName, admissionDate);
+                    }
+                    break;
+                case 3:
+                    MedicalRecord object3 = new MedicalRecord();
+                    System.out.println("1 - Add Record | 2 - Update | 3 - View:");
+                    int c = sc.nextInt();
+                    if (c == 1) {
+                        System.out.println("Enter Record ID, Patient, Doctor, Diagnosis, Prescription, Test Reports, Visit Date:");
+                        int recordID = sc.nextInt();
+                        sc.nextLine();
+                        String patient = sc.nextLine();
+                        String doctor = sc.nextLine();
+                        String diagnosis = sc.nextLine();
+                        String prescription = sc.nextLine();
+                        String testReports = sc.nextLine();
+                        String visitDate = sc.nextLine();
+                        object3.addRecord(recordID, patient, diagnosis, doctor, prescription, visitDate);
+                    } else if (c == 2) {
+                        System.out.println("Enter Record ID, Prescription, Test Reports, Patient:");
+                        int recordID = sc.nextInt();
+                        sc.nextLine();
+                        String prescription = sc.nextLine();
+                        String testReports = sc.nextLine();
+                        String patient = sc.nextLine();
+                        object3.updateRecord(recordID, patient, testReports, prescription);
+                    } else {
+                        int recordID = sc.nextInt();
+                        object3.viewRecord(recordID);
+                    }
+                    break;
+                case 4:
+                    System.out.println("Enter Patient Name and Bill ID:");
+                    sc.nextLine();
+                    String pName = sc.nextLine();
+                    int billId = sc.nextInt();
+                    System.out.println("Enter Room, Medicine, Consultation:");
+                    int room = sc.nextInt();
+                    int med = sc.nextInt();
+                    int consult = sc.nextInt();
+                    Bill_Class b = new Bill_Class(billId, pName, consult, med, room, "Pending");
+                    b.calculateTotal(med, room, consult);
+                    b.generateBill();
+                    b.makePayment();
+                    BillDAO.saveBill(b);
+                    break;
+                case 5:
+                    if (personCount >= persons.length) {
+                        System.out.println("Hospital is full!");
+                    } else {
+                        System.out.println("Enter ID, Name, Age, Gender, Phone, Address:");
+                        int id = sc.nextInt();
+                        sc.nextLine();
+                        String name = sc.nextLine();
+                        int age = sc.nextInt();
+                        sc.nextLine();
+                        String gender = sc.nextLine();
+                        long phone = sc.nextLong();
+                        sc.nextLine();
+                        String address = sc.nextLine();
+                        System.out.println("Enter Specialization, Salary, Status:");
+                        String spec = sc.nextLine();
+                        int salary = sc.nextInt();
+                        sc.nextLine();
+                        String status = sc.nextLine();
+                        Doctor d = new Doctor(id, name, age, gender, phone, address, spec, salary, status);
+                        persons[personCount++] = d;
+                        DoctorDAO.saveDoctor(d);
+                    }
+                    break;
+                case 6:
+                    if (personCount >= persons.length) {
+                        System.out.println("Hospital is full!");
+                    } else {
+                        System.out.println("Add as: 1-Doctor 2-Patient 3-Staff");
+                        int type = sc.nextInt();
+                        System.out.println("Enter ID, Name, Age, Gender, Phone, Address:");
+                        int id = sc.nextInt();
+                        sc.nextLine();
+                        String name = sc.nextLine();
+                        int age = sc.nextInt();
+                        sc.nextLine();
+                        String gender = sc.nextLine();
+                        long phone = sc.nextLong();
+                        sc.nextLine();
+                        String address = sc.nextLine();
+                        if (type == 1) {
+                            System.out.println("Enter Specialization, Salary, Status:");
+                            String spec = sc.nextLine();
+                            int sal = sc.nextInt();
+                            sc.nextLine();
+                            String status = sc.nextLine();
+                            Doctor doc = new Doctor(id, name, age, gender, phone, address, spec, sal, status);
+                            persons[personCount] = doc;
+                            DoctorDAO.saveDoctor(doc);
+                        } else if (type == 2) {
+                            System.out.println("Enter Blood Group, Disease, Admission, Discharge, History:");
+                            String bg = sc.nextLine();
+                            String dis = sc.nextLine();
+                            String ad = sc.nextLine();
+                            String dd = sc.nextLine();
+                            String mh = sc.nextLine();
+                            Patient pat = new Patient(id, name, age, gender, phone, address, bg, dis, ad, dd, mh);
+                            persons[personCount] = pat;
+                            PatientDAO.savePatient(pat);
+                        } else {
+                            System.out.println("Enter Role, Salary:");
+                            String role = sc.nextLine();
+                            int sal = sc.nextInt();
+                            Staff st = new Staff(id, name, age, gender, phone, address, role, sal);
+                            persons[personCount] = st;
+                            StaffDAO.saveStaff(st);
+                        }
+
+                        persons[personCount++].displayInfo();
+                    }
+                    break;
+                case 7:
+                    System.out.println("1 - Add Staff | 2 - View Staff:");
+                    int sc1 = sc.nextInt();
+                    if (sc1 == 1) {
+                        System.out.println("Enter ID, Name, Age, Gender, Phone, Address:");
+                        int id = sc.nextInt();
+                        sc.nextLine();
+                        String name = sc.nextLine();
+                        int age = sc.nextInt();
+                        sc.nextLine();
+                        String gender = sc.nextLine();
+                        long phone = sc.nextLong();
+                        sc.nextLine();
+                        String address = sc.nextLine();
+                        System.out.println("Enter Role, Salary:");
+                        String role = sc.nextLine();
+                        int salary = sc.nextInt();
+                        Staff s = new Staff(id, name, age, gender, phone, address, role, salary);
+                        persons[personCount++] = s;
+                        StaffDAO.saveStaff(s);
+                        break;
+                    }
+
+                    for(int i = 0; i < personCount; ++i) {
+                        if (persons[i] instanceof Staff) {
+                            persons[i].displayInfo();
+                            System.out.println("-----");
+                        }
+                    }
+                    break;
+                case 8:
+                    displayAllPersons();
+                    break;
+                default:
+                    System.out.println("Invalid Choice!");
+            }
+
+            System.out.println("\n--- Press 'y' to continue ---");
+            newChoice = sc.next().charAt(0);
+        } while(newChoice == 'y' || newChoice == 'Y');
+
+        System.out.println("Thank you for using Hospital System!");
+        DatabaseConnection.getConnection();
+    }
+}
