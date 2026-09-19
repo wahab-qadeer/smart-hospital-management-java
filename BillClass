@@ -1,0 +1,107 @@
+
+package p1;
+
+import java.util.Scanner;
+
+public class Bill_Class {
+    public int billId;
+    private String patient;
+    private int consultationFee;
+    private int medicineCharges;
+    private int roomCharges;
+    private int totalAmount;
+    private String paymentStaus;
+
+    public Bill_Class(int billId, String patient, int consultationFee, int medicineCharges, int roomCharges, String paymentStaus) {
+        this.billId = billId;
+        this.patient = patient;
+        this.consultationFee = consultationFee;
+        this.medicineCharges = medicineCharges;
+        this.roomCharges = roomCharges;
+        this.paymentStaus = paymentStaus;
+    }
+
+    public void generateBill() {
+        System.out.println("Patient Name:" + this.patient);
+        System.out.println("Bill ID:" + this.billId);
+        System.out.println("Total Bill !: " + this.totalAmount);
+    }
+
+    public void calculateTotal(int medicineCharges, int roomCharges, int consultationFee) {
+        this.totalAmount = medicineCharges + roomCharges + consultationFee;
+    }
+
+    public void makePayment() {
+        System.out.println("C for cash payment and O for online payment:");
+        Scanner sc = new Scanner(System.in);
+        char choice = sc.next().charAt(0);
+        if (choice != 'C' && choice != 'c') {
+            if (choice != 'O' && choice != 'o') {
+                System.out.println("Invalid choice:");
+            } else {
+                System.out.println("Enter your account number!");
+                int accountNumber = sc.nextInt();
+                System.out.println("Thank you ! your bill is payed");
+            }
+        } else {
+            System.out.println("Pay your payment ! Your Total bill is  " + this.totalAmount);
+        }
+
+    }
+
+    public int getBillId() {
+        return this.billId;
+    }
+
+    public void setBillId(int billId) {
+        this.billId = billId;
+    }
+
+    public String getPatient() {
+        return this.patient;
+    }
+
+    public void setPatient(String patient) {
+        this.patient = patient;
+    }
+
+    public int getConsultationFee() {
+        return this.consultationFee;
+    }
+
+    public void setConsultationFee(int consultationFee) {
+        this.consultationFee = consultationFee;
+    }
+
+    public int getMedicineCharges() {
+        return this.medicineCharges;
+    }
+
+    public void setMedicineCharges(int medicineCharges) {
+        this.medicineCharges = medicineCharges;
+    }
+
+    public int getRoomCharges() {
+        return this.roomCharges;
+    }
+
+    public void setRoomCharges(int roomCharges) {
+        this.roomCharges = roomCharges;
+    }
+
+    public int getTotalAmount() {
+        return this.totalAmount;
+    }
+
+    public void setTotalAmount(int totalAmount) {
+        this.totalAmount = totalAmount;
+    }
+
+    public String getPaymentStaus() {
+        return this.paymentStaus;
+    }
+
+    public void setPaymentStaus(String paymentStaus) {
+        this.paymentStaus = paymentStaus;
+    }
+}
