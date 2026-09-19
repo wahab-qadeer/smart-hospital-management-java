@@ -1,0 +1,44 @@
+
+package p1;
+
+public class Staff extends Person {
+    private String role;
+    private int salary;
+
+    public Staff(int staffID, String name, int age, String gender, long mobileNumber, String address, String role, int salary) {
+        super(staffID, name, age, gender, mobileNumber, address);
+        this.role = role;
+        this.salary = salary;
+        super.displayInfo();
+        System.out.println("Staff Role:" + this.role);
+        System.out.println("Staff Salary:" + this.salary);
+    }
+
+    public Staff() {
+        this(0, (String)null, 0, "", 0L, "", "", 0);
+    }
+
+    public int getStaffID() {
+        return super.id;
+    }
+
+    public void setStaffID(int staffID) {
+        super.id = staffID;
+    }
+
+    public String getRole() {
+        return this.role;
+    }
+
+    public void setRole(String role) {
+        this.role = role;
+    }
+
+    public int getSalary() {
+        return this.salary;
+    }
+
+    public void setSalary(int salary) {
+        this.salary = salary;
+    }
+}
