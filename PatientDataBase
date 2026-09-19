@@ -1,0 +1,61 @@
+
+package p1;
+
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+
+public class PatientDAO {
+    public PatientDAO() {
+    }
+
+    public static void savePatient(Patient p) {
+        String sql = "INSERT INTO Patients (id, name, age, gender, phoneNumber, address, bloodGroup, disease, admissionDate, dischargeDate, medicalHistory) VALUES (?,?,?,?,?,?,?,?,?,?,?)";
+
+        try {
+            Connection con = DatabaseConnection.getConnection();
+            PreparedStatement ps = con.prepareStatement(sql);
+            ps.setInt(1, p.getId());
+            ps.setString(2, p.getName());
+            ps.setInt(3, p.getAge());
+            ps.setString(4, p.getGender());
+            ps.setLong(5, p.getPhoneNumber());
+            ps.setString(6, p.getAddress());
+            ps.setString(7, p.getBloodGroup());
+            ps.setString(8, p.getDisease());
+            ps.setString(9, p.getAdmissionDate());
+            ps.setString(10, p.getDischargeDae());
+            ps.setString(11, p.getMedicalHistory());
+            ps.executeUpdate();
+            System.out.println("Patient saved to database!");
+        } catch (SQLException e) {
+            System.out.println("Error saving patient: " + e.getMessage());
+        }
+
+    }
+
+    public static void displayAllPatients() {
+        String sql = "SELECT * FROM Patients";
+
+        try {
+            Connection con = DatabaseConnection.getConnection();
+            PreparedStatement ps = con.prepareStatement(sql);
+            ResultSet rs = ps.executeQuery();
+            System.out.println("\n===== PATIENTS FROM DATABASE =====");
+
+            while(rs.next()) {
+                System.out.println("ID: " + rs.getInt("id"));
+                System.out.println("Name: " + rs.getString("name"));
+                System.out.println("Age: " + rs.getInt("age"));
+                System.out.println("Blood Group: " + rs.getString("bloodGroup"));
+                System.out.println("Disease: " + rs.getString("disease"));
+                System.out.println("Admission Date: " + rs.getString("admissionDate"));
+                System.out.println("-----");
+            }
+        } catch (SQLException e) {
+            System.out.println("Error: " + e.getMessage());
+        }
+
+    }
+}
