@@ -1,0 +1,59 @@
+
+
+package p1;
+
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+
+public class DoctorDAO {
+    public DoctorDAO() {
+    }
+
+    public static void saveDoctor(Doctor d) {
+        String sql = "INSERT INTO Doctors (id, name, age, gender, phoneNumber, address, specialization, salary, availabilityStatus) VALUES (?,?,?,?,?,?,?,?,?)";
+
+        try {
+            Connection con = DatabaseConnection.getConnection();
+            PreparedStatement ps = con.prepareStatement(sql);
+            ps.setInt(1, d.getId());
+            ps.setString(2, d.getName());
+            ps.setInt(3, d.getAge());
+            ps.setString(4, d.getGender());
+            ps.setLong(5, d.getPhoneNumber());
+            ps.setString(6, d.getAddress());
+            ps.setString(7, d.getSpecialization());
+            ps.setInt(8, d.getSalary());
+            ps.setString(9, d.getAvailabilityStatus());
+            ps.executeUpdate();
+            System.out.println("Doctor saved to database!");
+        } catch (SQLException e) {
+            System.out.println("Error saving doctor: " + e.getMessage());
+        }
+
+    }
+
+    public static void displayAllDoctors() {
+        String sql = "SELECT * FROM Doctors";
+
+        try {
+            Connection con = DatabaseConnection.getConnection();
+            PreparedStatement ps = con.prepareStatement(sql);
+            ResultSet rs = ps.executeQuery();
+            System.out.println("\n===== DOCTORS FROM DATABASE =====");
+
+            while(rs.next()) {
+                System.out.println("ID: " + rs.getInt("id"));
+                System.out.println("Name: " + rs.getString("name"));
+                System.out.println("Specialization: " + rs.getString("specialization"));
+                System.out.println("Salary: " + rs.getInt("salary"));
+                System.out.println("Status: " + rs.getString("availabilityStatus"));
+                System.out.println("-----");
+            }
+        } catch (SQLException e) {
+            System.out.println("Error: " + e.getMessage());
+        }
+
+    }
+}
