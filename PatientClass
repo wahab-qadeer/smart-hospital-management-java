@@ -1,0 +1,87 @@
+
+
+package p1;
+
+import java.util.Objects;
+
+public class Patient extends Person {
+    private String bloodGroup;
+    private String disease;
+    private String admissionDate;
+    private String dischargeDae;
+    private String medicalHistory;
+
+    public Patient(int id, String name, int age, String gender, long phoneNumber, String address, String bloodGroup, String disease, String admissionDate, String dischargeDae, String medicalHistory) {
+        super(id, name, age, gender, phoneNumber, address);
+        this.bloodGroup = bloodGroup;
+        this.disease = disease;
+        this.admissionDate = admissionDate;
+        this.dischargeDae = dischargeDae;
+        this.medicalHistory = medicalHistory;
+    }
+
+    public void admitPatient(int Id, String bloodGroup, String disease, String admissionDate) {
+        super.id = Id;
+        this.bloodGroup = bloodGroup;
+        this.disease = disease;
+        this.admissionDate = admissionDate;
+        System.out.println("Thank you ! patient is Admit :");
+    }
+
+    public void dischargePatient(int patientId, String bloodGroup, String disease, String admissionDate) {
+        if (super.id == patientId && Objects.equals(bloodGroup, this.bloodGroup) && Objects.equals(disease, this.disease) && admissionDate.equals(admissionDate)) {
+            System.out.println("YOUR PATIENT IS DISCHARGE :");
+            System.out.println("MEDICAL HISTORY:" + this.medicalHistory);
+        } else {
+            System.out.println("Invalid information about patient :");
+        }
+
+    }
+
+    public void viewMedicalHistory(int id) {
+        if (super.id == id) {
+            System.out.println("Medical History:" + this.medicalHistory);
+        }
+
+    }
+
+    public String getBloodGroup() {
+        return this.bloodGroup;
+    }
+
+    public void setBloodGroup(String bloodGroup) {
+        this.bloodGroup = bloodGroup;
+    }
+
+    public String getDisease() {
+        return this.disease;
+    }
+
+    public void setDisease(String disease) {
+        this.disease = disease;
+    }
+
+    public String getAdmissionDate() {
+        return this.admissionDate;
+    }
+
+    public void setAdmissionDate(String admissionDate) {
+        this.admissionDate = admissionDate;
+    }
+
+    public String getDischargeDae() {
+        return this.dischargeDae;
+    }
+
+    public void setDischargeDae(String dischargeDae) {
+        this.dischargeDae = dischargeDae;
+    }
+
+    public String getMedicalHistory() {
+        return this.medicalHistory;
+    }
+
+    public void setMedicalHistory(String medicalHistory) {
+        this.medicalHistory = medicalHistory;
+    }
+}
