@@ -1,0 +1,41 @@
+
+
+package p1;
+
+public class Doctor extends Person {
+    private String specialization;
+    private int salary;
+    private String availabilityStatus;
+
+    public Doctor(int id, String name, int age, String gender, long phoneNumber, String address, String specialization, int salary, String availabilityStatus) {
+        super(id, name, age, gender, phoneNumber, address);
+        this.specialization = specialization;
+        this.salary = salary;
+        this.availabilityStatus = availabilityStatus;
+    }
+
+    public void setAvailabilityStatus(String availability) {
+        this.availabilityStatus = availability;
+        System.out.println("Availability updated.");
+    }
+
+    public String getSpecialization() {
+        return this.specialization;
+    }
+
+    public void setSpecialization(String specialization) {
+        this.specialization = specialization;
+    }
+
+    public int getSalary() {
+        return this.salary;
+    }
+
+    public void setSalary(int salary) {
+        this.salary = salary;
+    }
+
+    public String getAvailabilityStatus() {
+        return this.availabilityStatus;
+    }
+}
