@@ -1,0 +1,56 @@
+
+
+package p1;
+
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+
+public class BillDAO {
+    public BillDAO() {
+    }
+
+    public static void saveBill(Bill_Class b) {
+        String sql = "INSERT INTO Bills (billId, patientName, medicineCharges, roomCharges, consultationFee, totalAmount, paymentStatus) VALUES (?,?,?,?,?,?,?)";
+
+        try {
+            Connection con = DatabaseConnection.getConnection();
+            PreparedStatement ps = con.prepareStatement(sql);
+            ps.setInt(1, b.getBillId());
+            ps.setString(2, b.getPatient());
+            ps.setInt(3, b.getMedicineCharges());
+            ps.setInt(4, b.getRoomCharges());
+            ps.setInt(5, b.getConsultationFee());
+            ps.setInt(6, b.getTotalAmount());
+            ps.setString(7, b.getPaymentStaus());
+            ps.executeUpdate();
+            System.out.println("Bill saved to database!");
+        } catch (SQLException e) {
+            System.out.println("Error saving bill: " + e.getMessage());
+        }
+
+    }
+
+    public static void displayAllBills() {
+        String sql = "SELECT * FROM Bills";
+
+        try {
+            Connection con = DatabaseConnection.getConnection();
+            PreparedStatement ps = con.prepareStatement(sql);
+            ResultSet rs = ps.executeQuery();
+            System.out.println("\n===== BILLS FROM DATABASE =====");
+
+            while(rs.next()) {
+                System.out.println("Bill ID: " + rs.getInt("billId"));
+                System.out.println("Patient: " + rs.getString("patientName"));
+                System.out.println("Total Amount: " + rs.getInt("totalAmount"));
+                System.out.println("Payment Status: " + rs.getString("paymentStatus"));
+                System.out.println("-----");
+            }
+        } catch (SQLException e) {
+            System.out.println("Error: " + e.getMessage());
+        }
+
+    }
+}
