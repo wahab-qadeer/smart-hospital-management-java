@@ -1,0 +1,143 @@
+
+
+package p1;
+
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+
+public class StaffDAO {
+    public StaffDAO() {
+    }
+
+    public static void saveStaff(Staff s) {
+        String sql = "INSERT INTO Staff (id, name, age, gender, phoneNumber, address, role, salary) VALUES (?,?,?,?,?,?,?,?)";
+        Connection con = DatabaseConnection.getConnection();
+
+        try {
+            Throwable var3 = null;
+            Object var4 = null;
+
+            try {
+                PreparedStatement ps = con.prepareStatement(sql);
+
+                try {
+                    ps.setInt(1, s.getStaffID());
+                    ps.setString(2, s.getName());
+                    ps.setInt(3, s.getAge());
+                    ps.setString(4, s.getGender());
+                    ps.setLong(5, s.getPhoneNumber());
+                    ps.setString(6, s.getAddress());
+                    ps.setString(7, s.getRole());
+                    ps.setInt(8, s.getSalary());
+                    ps.executeUpdate();
+                    System.out.println("✅ Staff saved successfully!");
+                } finally {
+                    if (ps != null) {
+                        ps.close();
+                    }
+
+                }
+            } catch (Throwable var13) {
+                if (var3 == null) {
+                    var3 = var13;
+                } else if (var3 != var13) {
+                    var3.addSuppressed(var13);
+                }
+
+                throw var3;
+            }
+        } catch (SQLException e) {
+            System.out.println("❌ Error while saving staff:");
+            e.printStackTrace();
+        }
+
+    }
+
+    public static void displayAllStaff() {
+        String sql = "SELECT * FROM Staff";
+
+        try {
+            Throwable var1 = null;
+            Object var2 = null;
+
+            try {
+                Connection con = DatabaseConnection.getConnection();
+
+                try {
+                    PreparedStatement ps = con.prepareStatement(sql);
+
+                    try {
+                        ResultSet rs = ps.executeQuery();
+
+                        try {
+                            System.out.println("\n===== STAFF LIST =====");
+
+                            while(rs.next()) {
+                                System.out.println("ID: " + rs.getInt("id"));
+                                System.out.println("Name: " + rs.getString("name"));
+                                System.out.println("Age: " + rs.getInt("age"));
+                                System.out.println("Gender: " + rs.getString("gender"));
+                                System.out.println("Phone: " + rs.getLong("phoneNumber"));
+                                System.out.println("Address: " + rs.getString("address"));
+                                System.out.println("Role: " + rs.getString("role"));
+                                System.out.println("Salary: " + rs.getInt("salary"));
+                                System.out.println("----------------------");
+                            }
+                        } finally {
+                            if (rs != null) {
+                                rs.close();
+                            }
+
+                        }
+                    } catch (Throwable var27) {
+                        if (var1 == null) {
+                            var1 = var27;
+                        } else if (var1 != var27) {
+                            var1.addSuppressed(var27);
+                        }
+
+                        if (ps != null) {
+                            ps.close();
+                        }
+
+                        throw var1;
+                    }
+
+                    if (ps != null) {
+                        ps.close();
+                    }
+                } catch (Throwable var28) {
+                    if (var1 == null) {
+                        var1 = var28;
+                    } else if (var1 != var28) {
+                        var1.addSuppressed(var28);
+                    }
+
+                    if (con != null) {
+                        con.close();
+                    }
+
+                    throw var1;
+                }
+
+                if (con != null) {
+                    con.close();
+                }
+            } catch (Throwable var29) {
+                if (var1 == null) {
+                    var1 = var29;
+                } else if (var1 != var29) {
+                    var1.addSuppressed(var29);
+                }
+
+                throw var1;
+            }
+        } catch (SQLException e) {
+            System.out.println("❌ Error while fetching staff:");
+            e.printStackTrace();
+        }
+
+    }
+}
