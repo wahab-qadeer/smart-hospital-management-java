@@ -1,0 +1,54 @@
+
+package p1;
+
+public class MedicalRecord {
+    private int recordID;
+    private String patient;
+    private String doctor;
+    private String diagnosis;
+    private String prescription;
+    private String testReports;
+    private String visitDate;
+
+    public MedicalRecord() {
+    }
+
+    public void addRecord(int recordID, String patient, String diagnosis, String doctor, String prescription, String visitDate) {
+        this.diagnosis = diagnosis;
+        this.recordID = recordID;
+        this.patient = patient;
+        this.visitDate = visitDate;
+        this.prescription = prescription;
+        this.doctor = doctor;
+        System.out.println("Thank you ! Record is ADD");
+    }
+
+    public void updateRecord(int recordID, String patient, String testReports, String prescription) {
+        this.recordID = recordID;
+        this.patient = patient;
+        this.prescription = prescription;
+        this.testReports = testReports;
+        System.out.println("Thank you you record is update");
+    }
+
+    public void viewRecord(int recordID) {
+        if (recordID == this.recordID) {
+            System.out.println("Patient:" + this.patient);
+            System.out.println("Record ID:" + this.recordID);
+            System.out.println("Visit Date:" + this.visitDate);
+            System.out.println("Doctor Name:" + this.doctor);
+            System.out.println("Diagnosis:" + this.diagnosis);
+            System.out.println("Prescription:" + this.prescription);
+            System.out.println("Test Reports:" + this.testReports);
+        }
+
+    }
+
+    public void setRecordID(int ID) {
+        this.recordID = ID;
+    }
+
+    public void setPatient(String patient) {
+        this.patient = patient;
+    }
+}
