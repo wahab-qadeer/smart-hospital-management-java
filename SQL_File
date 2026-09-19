@@ -1,0 +1,40 @@
+CREATE TABLE Patients (
+    id INT,
+    name VARCHAR(50),
+    age INT,
+    gender VARCHAR(10),
+    phoneNumber BIGINT,
+    address VARCHAR(100),
+    bloodGroup VARCHAR(10),
+    disease VARCHAR(100),
+    admissionDate DATE,
+    dischargeDate DATE,
+    medicalHistory VARCHAR(255)
+);
+
+CREATE TABLE Doctors (
+    id INT,
+    name VARCHAR(50),
+    age INT,
+    gender VARCHAR(10),
+    phoneNumber BIGINT,
+    address VARCHAR(100),
+    specialization VARCHAR(50),
+    salary INT,
+    availabilityStatus VARCHAR(20)
+);
+CREATE TABLE Bills (
+    billId INT,
+    patientName VARCHAR(50),
+    medicineCharges INT,
+    roomCharges INT,
+    consultationFee INT,
+    totalAmount INT,
+    paymentStatus VARCHAR(20)
+);
+
+INSERT INTO Bills 
+VALUES (1, 'Ali', 2000, 5000, 1500, 8500, 'Paid');
+
+select * from Staff
+select * from Doctors
